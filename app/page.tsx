@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Book, Code, FileText, Play } from "lucide-react"
+import { Book, Code, FileText, Menu, Play, X } from "lucide-react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { CodeBlock } from "@/components/code-block"
@@ -1530,13 +1530,22 @@ On Error GoTo 0       ' Desactivar manejo de errores`}
     }
   }
 
+ const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+
   return (
     <div className="min-h-screen bg-background">
       {/* Header con buscador */}
       <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container flex h-16 items-center justify-between px-4">
           <div className="flex items-center gap-4">
-            <h1 className="text-xl font-bold">VBA Excel Docs</h1>
+            {/* Botón hamburguesa visible solo en móviles */}
+            <button
+              className="lg:hidden p-2 rounded-md hover:bg-accent"
+              onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+            >
+              {isSidebarOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            </button>
+            <h1 className="text-xl font-bold hidden lg:block">VBA Excel Docs</h1>
           </div>
           <SearchBar onResultClick={handleSearchResult} searchData={searchData} />
         </div>
@@ -1544,14 +1553,23 @@ On Error GoTo 0       ' Desactivar manejo de errores`}
 
       <div className="flex">
         {/* Sidebar */}
-        <aside className="sticky top-16 h-[calc(100vh-4rem)] w-64 border-r bg-sidebar overflow-y-auto">
+        <aside
+          className={`
+            fixed inset-y-0 left-0 z-50 w-64 border-r bg-sidebar overflow-y-auto transform transition-transform duration-300
+            lg:sticky lg:top-16 lg:h-[calc(100vh-4rem)] lg:translate-x-0
+            ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"}
+          `}
+        >
           <nav className="p-4 space-y-2">
             {sidebarSections.map((section) => {
               const Icon = section.icon
               return (
                 <button
                   key={section.id}
-                  onClick={() => setActiveSection(section.id)}
+                  onClick={() => {
+                    setActiveSection(section.id)
+                    setIsSidebarOpen(false) // cerrar al seleccionar en móvil
+                  }}
                   className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-colors ${
                     activeSection === section.id
                       ? "bg-sidebar-accent text-sidebar-accent-foreground"
@@ -1565,6 +1583,14 @@ On Error GoTo 0       ' Desactivar manejo de errores`}
             })}
           </nav>
         </aside>
+
+        {/* Overlay en móviles */}
+        {isSidebarOpen && (
+          <div
+            className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+            onClick={() => setIsSidebarOpen(false)}
+          />
+        )}
 
         {/* Main content */}
         <main className="flex-1 p-6">

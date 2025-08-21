@@ -1,67 +1,67 @@
-"use client"
+"use client";
 
-import { useState, useMemo } from "react"
-import { Search, X } from "lucide-react"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
+import { useState, useMemo } from "react";
+import { Search, X } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 
 interface SearchResult {
-  id: string
-  title: string
-  category: string
-  section: string
-  description: string
-  code?: string
+  id: string;
+  title: string;
+  category: string;
+  section: string;
+  description: string;
+  code?: string;
 }
 
 interface SearchBarProps {
-  onResultClick: (section: string, itemId?: string) => void
-  searchData: SearchResult[]
+  onResultClick: (section: string, itemId?: string) => void;
+  searchData: SearchResult[];
 }
 
 export function SearchBar({ onResultClick, searchData }: SearchBarProps) {
-  const [query, setQuery] = useState("")
-  const [isOpen, setIsOpen] = useState(false)
+  const [query, setQuery] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
 
   const filteredResults = useMemo(() => {
-    if (!query.trim()) return []
+    if (!query.trim()) return [];
 
-    const searchTerm = query.toLowerCase()
+    const searchTerm = query.toLowerCase();
     return searchData
       .filter(
         (item) =>
           item.title.toLowerCase().includes(searchTerm) ||
           item.description.toLowerCase().includes(searchTerm) ||
           item.category.toLowerCase().includes(searchTerm) ||
-          (item.code && item.code.toLowerCase().includes(searchTerm)),
+          (item.code && item.code.toLowerCase().includes(searchTerm))
       )
-      .slice(0, 8) // Limitar a 8 resultados
-  }, [query, searchData])
+      .slice(0, 8); // Limitar a 8 resultados
+  }, [query, searchData]);
 
   const handleResultClick = (result: SearchResult) => {
-    onResultClick(result.section, result.id)
-    setQuery("")
-    setIsOpen(false)
-  }
+    onResultClick(result.section, result.id);
+    setQuery("");
+    setIsOpen(false);
+  };
 
   const clearSearch = () => {
-    setQuery("")
-    setIsOpen(false)
-  }
+    setQuery("");
+    setIsOpen(false);
+  };
 
   return (
     <div className="relative w-full max-w-md">
-      <div className="relative">
-        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+      <div className="relative sm:pl-0 pl-12">
+        <Search className="left-15 absolute sm:left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
         <Input
           type="text"
           placeholder="Buscar en la documentación..."
           value={query}
           onChange={(e) => {
-            setQuery(e.target.value)
-            setIsOpen(true)
+            setQuery(e.target.value);
+            setIsOpen(true);
           }}
           onFocus={() => setIsOpen(true)}
           className="pl-10 pr-10"
@@ -94,7 +94,9 @@ export function SearchBar({ onResultClick, searchData }: SearchBarProps) {
                       {result.category}
                     </Badge>
                   </div>
-                  <p className="text-xs text-muted-foreground line-clamp-2">{result.description}</p>
+                  <p className="text-xs text-muted-foreground line-clamp-2">
+                    {result.description}
+                  </p>
                 </div>
               ))}
             </div>
@@ -103,7 +105,9 @@ export function SearchBar({ onResultClick, searchData }: SearchBarProps) {
       )}
 
       {/* Overlay para cerrar búsqueda */}
-      {isOpen && <div className="fixed inset-0 z-40" onClick={() => setIsOpen(false)} />}
+      {isOpen && (
+        <div className="fixed inset-0 z-40" onClick={() => setIsOpen(false)} />
+      )}
     </div>
-  )
+  );
 }
