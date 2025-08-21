@@ -166,7 +166,7 @@ export function CodeBlock({
       )}
       <div className="relative w-full max-w-full overflow-x-auto overflow-y-auto">
         <div className="w-full max-w-full">
-          <pre className="vba-code-block whitespace-pre md:w-[85vw] w-[80vw]">
+          <pre className="vba-code-block whitespace-pre  md:w-full w-[80vw]">
             <code ref={codeRef} className={`language-${language} block w-full`}>
               {code}
             </code>
