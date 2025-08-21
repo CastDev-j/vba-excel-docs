@@ -1780,7 +1780,7 @@ On Error GoTo 0       ' Desactivar manejo de errores`}
 
         {/* Main content */}
         <main className="flex-1 p-6">
-          <div className="max-w-4xl mx-auto">{renderContent()}</div>
+          <div className="max-w-3xl mx-auto ">{renderContent()}</div>
         </main>
       </div>
     </div>
