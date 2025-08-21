@@ -1,20 +1,29 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Book, Code, FileText, Menu, Play, X } from "lucide-react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { CodeBlock } from "@/components/code-block"
-import { SearchBar } from "@/components/search-bar"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Button } from "@/components/ui/button"
+import { useState } from "react";
+import { Book, Code, FileText, Menu, Play, X } from "lucide-react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { CodeBlock } from "@/components/code-block";
+import { SearchBar } from "@/components/search-bar";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Button } from "@/components/ui/button";
 
 const excelObjects = [
   {
     object: "Application",
     description: "Controlar la aplicación Excel completa",
     properties: [
-      { name: "ScreenUpdating", desc: "Controla las actualizaciones de la pantalla" },
+      {
+        name: "ScreenUpdating",
+        desc: "Controla las actualizaciones de la pantalla",
+      },
       { name: "Calculation", desc: "Controla el modo de cálculo" },
       { name: "StatusBar", desc: "Muestra texto en la barra de estado" },
     ],
@@ -107,11 +116,11 @@ cell.Value = "Hola"
 cell.Font.Bold = True
 cell.Interior.Color = RGB(255, 255, 0)`,
   },
-]
+];
 
 export default function VBADocumentation() {
-  const [activeSection, setActiveSection] = useState("inicio")
-  const [difficultyFilter, setDifficultyFilter] = useState("Todos")
+  const [activeSection, setActiveSection] = useState("inicio");
+  const [difficultyFilter, setDifficultyFilter] = useState("Todos");
 
   const searchData = [
     // Sintaxis básica
@@ -120,28 +129,32 @@ export default function VBADocumentation() {
       title: "Declaración de Variables",
       category: "Variables",
       section: "sintaxis",
-      description: "Cómo declarar variables en VBA con diferentes tipos de datos",
+      description:
+        "Cómo declarar variables en VBA con diferentes tipos de datos",
     },
     {
       id: "constantes",
       title: "Constantes",
       category: "Variables",
       section: "sintaxis",
-      description: "Definir valores constantes que no cambian durante la ejecución",
+      description:
+        "Definir valores constantes que no cambian durante la ejecución",
     },
     {
       id: "arrays",
       title: "Arrays (Matrices)",
       category: "Variables",
       section: "sintaxis",
-      description: "Trabajar con arrays estáticos y dinámicos para almacenar múltiples valores",
+      description:
+        "Trabajar con arrays estáticos y dinámicos para almacenar múltiples valores",
     },
     {
       id: "if-then",
       title: "Estructuras If-Then",
       category: "Control",
       section: "sintaxis",
-      description: "Estructuras condicionales para tomar decisiones en el código",
+      description:
+        "Estructuras condicionales para tomar decisiones en el código",
     },
     {
       id: "loops",
@@ -162,7 +175,8 @@ export default function VBADocumentation() {
       title: "Funciones (Function)",
       category: "Procedimientos",
       section: "sintaxis",
-      description: "Crear funciones que devuelven valores y pueden ser reutilizadas",
+      description:
+        "Crear funciones que devuelven valores y pueden ser reutilizadas",
     },
 
     // Objetos Excel
@@ -208,7 +222,8 @@ export default function VBADocumentation() {
       title: "Automatizar Formato de Reportes",
       category: "Formato",
       section: "ejemplos",
-      description: "Aplicar formato automático a reportes con encabezados, bordes y colores",
+      description:
+        "Aplicar formato automático a reportes con encabezados, bordes y colores",
     },
     {
       id: "validacion-datos",
@@ -222,7 +237,8 @@ export default function VBADocumentation() {
       title: "Generar Dashboard Automático",
       category: "Dashboard",
       section: "ejemplos",
-      description: "Crear dashboards automáticos con gráficos y tablas dinámicas",
+      description:
+        "Crear dashboards automáticos con gráficos y tablas dinámicas",
     },
     {
       id: "importar-datos",
@@ -238,20 +254,20 @@ export default function VBADocumentation() {
       section: "ejemplos",
       description: "Enviar emails automáticamente desde Excel usando Outlook",
     },
-  ]
+  ];
 
   const handleSearchResult = (section: string, itemId?: string) => {
-    setActiveSection(section)
+    setActiveSection(section);
     if (itemId) {
       // Scroll al elemento específico después de un pequeño delay
       setTimeout(() => {
-        const element = document.getElementById(itemId)
+        const element = document.getElementById(itemId);
         if (element) {
-          element.scrollIntoView({ behavior: "smooth", block: "start" })
+          element.scrollIntoView({ behavior: "smooth", block: "start" });
         }
-      }, 100)
+      }, 100);
     }
-  }
+  };
 
   const sidebarSections = [
     { id: "inicio", title: "Inicio", icon: Book },
@@ -259,7 +275,7 @@ export default function VBADocumentation() {
     { id: "objetos", title: "Objetos Excel", icon: FileText },
     { id: "ejemplos", title: "Ejemplos Prácticos", icon: Play },
     { id: "referencia", title: "Referencia Completa", icon: Book },
-  ]
+  ];
 
   const vbaSyntax = [
     {
@@ -283,7 +299,8 @@ contador = 0
 ' Variables de objeto
 Dim hoja As Worksheet
 Set hoja = ActiveSheet`,
-          description: "Las variables deben declararse antes de usarse. Use 'Set' para objetos.",
+          description:
+            "Las variables deben declararse antes de usarse. Use 'Set' para objetos.",
           tips: "Siempre declare variables para evitar errores. Use nombres descriptivos.",
         },
         {
@@ -301,7 +318,8 @@ Dim precio As Double
 precio = 100
 Dim precioConIVA As Double
 precioConIVA = precio * (1 + IVA)`,
-          description: "Las constantes no cambian durante la ejecución del programa.",
+          description:
+            "Las constantes no cambian durante la ejecución del programa.",
           tips: "Use constantes para valores que no cambiarán, como tasas o límites.",
         },
         {
@@ -353,7 +371,8 @@ ElseIf ventas > 5000 Then
 Else
     comision = 0
 End If`,
-          description: "Ejecuta código basado en condiciones verdaderas o falsas.",
+          description:
+            "Ejecuta código basado en condiciones verdaderas o falsas.",
           tips: "Use ElseIf para múltiples condiciones. Siempre termine con End If.",
         },
         {
@@ -382,7 +401,8 @@ Select Case calificacion
     Case Else
         letra = "F"
 End Select`,
-          description: "Evalúa una expresión contra múltiples valores posibles.",
+          description:
+            "Evalúa una expresión contra múltiples valores posibles.",
           tips: "Use Select Case cuando tenga muchas condiciones If-ElseIf.",
         },
       ],
@@ -412,7 +432,8 @@ Next celda
 For Each hoja In ThisWorkbook.Worksheets
     hoja.Cells(1, 1).Value = "Encabezado"
 Next hoja`,
-          description: "Repite código un número específico de veces o para cada elemento.",
+          description:
+            "Repite código un número específico de veces o para cada elemento.",
           tips: "Use For Each para recorrer colecciones. Step permite incrementos personalizados.",
         },
         {
@@ -439,7 +460,8 @@ While Not IsEmpty(ActiveCell)
     ActiveCell.Value = UCase(ActiveCell.Value)
     ActiveCell.Offset(1, 0).Select
 Wend`,
-          description: "Repite código mientras o hasta que se cumpla una condición.",
+          description:
+            "Repite código mientras o hasta que se cumpla una condición.",
           tips: "Cuidado con bucles infinitos. Siempre asegúrese de que la condición cambie.",
         },
       ],
@@ -471,7 +493,8 @@ Call SaludarUsuario
 MostrarMensaje "Proceso completado", "Información"
 FormatearCelda Range("A1")
 FormatearCelda Range("B1"), RGB(0, 255, 0)`,
-          description: "Las subrutinas ejecutan código pero no devuelven valores.",
+          description:
+            "Las subrutinas ejecutan código pero no devuelven valores.",
           tips: "Use Call para llamar subs (opcional). Los parámetros opcionales deben ir al final.",
         },
         {
@@ -510,7 +533,7 @@ resultado = DividirSeguro(10, 2)`,
         },
       ],
     },
-  ]
+  ];
 
   const practicalExamples = [
     // EJEMPLOS BÁSICOS
@@ -575,7 +598,8 @@ End Sub`,
     
     MsgBox "Números del 1 al 10 escritos en columna A"
 End Sub`,
-      description: "Uso básico de bucles For para automatizar tareas repetitivas",
+      description:
+        "Uso básico de bucles For para automatizar tareas repetitivas",
       category: "Básicos",
     },
     {
@@ -593,7 +617,8 @@ End Sub`,
         .HorizontalAlignment = xlCenter
     End With
 End Sub`,
-      description: "Aplicar formato básico: negrita, color, tamaño y alineación",
+      description:
+        "Aplicar formato básico: negrita, color, tamaño y alineación",
       category: "Formato",
     },
 
@@ -639,7 +664,8 @@ End Sub`,
     
     MsgBox "Formato aplicado correctamente", vbInformation
 End Sub`,
-      description: "Automatiza el formato de reportes con encabezados, bordes, colores alternos y filtros",
+      description:
+        "Automatiza el formato de reportes con encabezados, bordes, colores alternos y filtros",
       category: "Formato y Presentación",
     },
     {
@@ -690,7 +716,8 @@ Sub ValidarFormulario()
         Range("B6").Interior.Color = RGB(255, 182, 193)
     End If
 End Sub`,
-      description: "Sistema completo de validación de formularios con mensajes de error detallados",
+      description:
+        "Sistema completo de validación de formularios con mensajes de error detallados",
       category: "Validación de Datos",
     },
     {
@@ -718,7 +745,8 @@ End Sub`,
         MsgBox "Se reemplazaron " & contador & " coincidencias", vbInformation
     End If
 End Sub`,
-      description: "Herramienta para buscar y reemplazar texto en toda la hoja con contador",
+      description:
+        "Herramienta para buscar y reemplazar texto en toda la hoja con contador",
       category: "Manipulación de Datos",
     },
     {
@@ -833,7 +861,8 @@ Sub EnviarEmailPersonalizado(destinatario As String, nombrePersona As String)
     Set outlookMail = Nothing
     Set outlookApp = Nothing
 End Sub`,
-      description: "Sistema completo para envío automático de emails individuales y masivos usando Outlook",
+      description:
+        "Sistema completo para envío automático de emails individuales y masivos usando Outlook",
       category: "Automatización de Emails",
     },
     {
@@ -904,7 +933,8 @@ Sub InicializarSistemaEmpleados()
     
     MsgBox "Sistema de empleados inicializado", vbInformation
 End Sub`,
-      description: "Sistema completo de gestión de empleados con clases, búsqueda y formato automático",
+      description:
+        "Sistema completo de gestión de empleados con clases, búsqueda y formato automático",
       category: "Sistemas Complejos",
     },
     {
@@ -961,7 +991,8 @@ End Sub
 Sub ActualizarEstado(mensaje As String)
     Range("EstadoDashboard").Value = "Estado: " & mensaje
 End Sub`,
-      description: "Dashboard completo con botones interactivos y área de estado dinámico",
+      description:
+        "Dashboard completo con botones interactivos y área de estado dinámico",
       category: "Interfaces de Usuario",
     },
     {
@@ -1016,7 +1047,8 @@ End Sub`,
     
     MsgBox "Datos extraídos exitosamente: " & (i - 1) & " registros", vbInformation
 End Sub`,
-      description: "Extrae datos automáticamente de páginas web y los organiza en Excel",
+      description:
+        "Extrae datos automáticamente de páginas web y los organiza en Excel",
       category: "Web Scraping",
     },
     {
@@ -1107,10 +1139,11 @@ Sub RegistrarBackup(rutaCompleta As String)
     Print #numeroArchivo, Format(Now, "yyyy-mm-dd hh:mm:ss") & " - Backup creado: " & rutaCompleta
     Close #numeroArchivo
 End Sub`,
-      description: "Sistema completo de backup automático con limpieza de archivos antiguos y registro de actividad",
+      description:
+        "Sistema completo de backup automático con limpieza de archivos antiguos y registro de actividad",
       category: "Automatización de Archivos",
     },
-  ]
+  ];
 
   const renderContent = () => {
     switch (activeSection) {
@@ -1118,9 +1151,12 @@ End Sub`,
         return (
           <div className="space-y-6">
             <div className="text-center py-8">
-              <h1 className="text-4xl font-bold text-primary mb-4">VBA para Excel</h1>
+              <h1 className="text-4xl font-bold text-primary mb-4">
+                VBA para Excel
+              </h1>
               <p className="text-xl text-muted-foreground mb-8">
-                Documentación completa para programar con Visual Basic for Applications en Excel
+                Documentación completa para programar con Visual Basic for
+                Applications en Excel
               </p>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
                 <Card
@@ -1130,7 +1166,9 @@ End Sub`,
                   <CardHeader className="text-center">
                     <Code className="h-12 w-12 text-primary mx-auto mb-2" />
                     <CardTitle>Sintaxis Básica</CardTitle>
-                    <CardDescription>Aprende los fundamentos de VBA</CardDescription>
+                    <CardDescription>
+                      Aprende los fundamentos de VBA
+                    </CardDescription>
                   </CardHeader>
                 </Card>
                 <Card
@@ -1140,7 +1178,9 @@ End Sub`,
                   <CardHeader className="text-center">
                     <FileText className="h-12 w-12 text-primary mx-auto mb-2" />
                     <CardTitle>Objetos Excel</CardTitle>
-                    <CardDescription>Domina los objetos de Excel</CardDescription>
+                    <CardDescription>
+                      Domina los objetos de Excel
+                    </CardDescription>
                   </CardHeader>
                 </Card>
                 <Card
@@ -1156,46 +1196,63 @@ End Sub`,
               </div>
             </div>
           </div>
-        )
+        );
 
       case "sintaxis":
         return (
           <div className="space-y-6">
             <div>
-              <h2 className="text-3xl font-bold text-primary mb-4">Sintaxis Básica de VBA</h2>
-              <p className="text-muted-foreground mb-6">Fundamentos esenciales para programar en VBA</p>
+              <h2 className="text-3xl font-bold text-primary mb-4">
+                Sintaxis Básica de VBA
+              </h2>
+              <p className="text-muted-foreground mb-6">
+                Fundamentos esenciales para programar en VBA
+              </p>
             </div>
 
             {vbaSyntax.map((section, sectionIndex) => (
               <div key={sectionIndex} className="space-y-4">
-                <h3 className="text-2xl font-semibold text-primary">{section.category}</h3>
+                <h3 className="text-2xl font-semibold text-primary">
+                  {section.category}
+                </h3>
                 {section.items.map((item, itemIndex) => (
-                  <Card key={itemIndex} id={item.id}>
+                  <Card key={itemIndex} id={item.id} className="flex w-full">
                     <CardHeader>
                       <CardTitle className="text-xl">{item.name}</CardTitle>
                       <CardDescription>{item.description}</CardDescription>
                       {item.tips && (
                         <div className="mt-2 p-3 bg-accent/50 rounded-lg">
-                          <p className="text-sm font-medium text-accent-foreground">💡 Consejo: {item.tips}</p>
+                          <p className="text-sm font-medium text-accent-foreground">
+                            💡 Consejo: {item.tips}
+                          </p>
                         </div>
                       )}
                     </CardHeader>
-                    <CardContent>
-                      <CodeBlock code={item.syntax} title={item.name} description={item.description} language="vba" />
+                    <CardContent className="w-full overflow-x-auto">
+                      <CodeBlock
+                        code={item.syntax}
+                        title={item.name}
+                        description={item.description}
+                        language="vba"
+                      />
                     </CardContent>
                   </Card>
                 ))}
               </div>
             ))}
           </div>
-        )
+        );
 
       case "ejemplos":
         return (
           <div className="space-y-6">
             <div>
-              <h2 className="text-3xl font-bold text-primary mb-4">Ejemplos Prácticos</h2>
-              <p className="text-muted-foreground mb-6">Código VBA organizado por nivel de dificultad</p>
+              <h2 className="text-3xl font-bold text-primary mb-4">
+                Ejemplos Prácticos
+              </h2>
+              <p className="text-muted-foreground mb-6">
+                Código VBA organizado por nivel de dificultad
+              </p>
             </div>
 
             <div className="flex flex-wrap gap-2 mb-6">
@@ -1211,41 +1268,67 @@ End Sub`,
                 size="sm"
                 onClick={() => setDifficultyFilter("Básico")}
               >
-                Básico ({practicalExamples.filter((ex) => ex.difficulty === "Básico").length})
+                Básico (
+                {
+                  practicalExamples.filter((ex) => ex.difficulty === "Básico")
+                    .length
+                }
+                )
               </Button>
               <Button
-                variant={difficultyFilter === "Intermedio" ? "default" : "outline"}
+                variant={
+                  difficultyFilter === "Intermedio" ? "default" : "outline"
+                }
                 size="sm"
                 onClick={() => setDifficultyFilter("Intermedio")}
               >
-                Intermedio ({practicalExamples.filter((ex) => ex.difficulty === "Intermedio").length})
+                Intermedio (
+                {
+                  practicalExamples.filter(
+                    (ex) => ex.difficulty === "Intermedio"
+                  ).length
+                }
+                )
               </Button>
               <Button
-                variant={difficultyFilter === "Avanzado" ? "default" : "outline"}
+                variant={
+                  difficultyFilter === "Avanzado" ? "default" : "outline"
+                }
                 size="sm"
                 onClick={() => setDifficultyFilter("Avanzado")}
               >
-                Avanzado ({practicalExamples.filter((ex) => ex.difficulty === "Avanzado").length})
+                Avanzado (
+                {
+                  practicalExamples.filter((ex) => ex.difficulty === "Avanzado")
+                    .length
+                }
+                )
               </Button>
             </div>
 
             <div className="space-y-6">
               {practicalExamples
-                .filter((example) => difficultyFilter === "Todos" || example.difficulty === difficultyFilter)
+                .filter(
+                  (example) =>
+                    difficultyFilter === "Todos" ||
+                    example.difficulty === difficultyFilter
+                )
                 .map((example, index) => (
                   <Card key={index} id={example.id}>
                     <CardHeader>
                       <div className="flex items-center justify-between">
                         <div>
-                          <CardTitle className="text-xl">{example.title}</CardTitle>
+                          <CardTitle className="text-xl">
+                            {example.title}
+                          </CardTitle>
                           <div className="flex items-center gap-2 mt-2">
                             <Badge
                               variant={
                                 example.difficulty === "Básico"
                                   ? "secondary"
                                   : example.difficulty === "Intermedio"
-                                    ? "default"
-                                    : "destructive"
+                                  ? "default"
+                                  : "destructive"
                               }
                             >
                               {example.difficulty}
@@ -1254,7 +1337,9 @@ End Sub`,
                           </div>
                         </div>
                       </div>
-                      <CardDescription className="mt-2">{example.description}</CardDescription>
+                      <CardDescription className="mt-2">
+                        {example.description}
+                      </CardDescription>
                     </CardHeader>
                     <CardContent>
                       <CodeBlock
@@ -1268,13 +1353,15 @@ End Sub`,
                 ))}
             </div>
           </div>
-        )
+        );
 
       case "objetos":
         return (
           <div className="space-y-6">
             <div>
-              <h2 className="text-3xl font-bold text-primary mb-4">Objetos de Excel</h2>
+              <h2 className="text-3xl font-bold text-primary mb-4">
+                Objetos de Excel
+              </h2>
               <p className="text-muted-foreground mb-6">
                 Comprende los objetos principales que puedes manipular con VBA
               </p>
@@ -1284,26 +1371,41 @@ End Sub`,
               {excelObjects.map((obj, index) => (
                 <Card key={index}>
                   <CardHeader>
-                    <CardTitle className="text-xl text-primary">{obj.object}</CardTitle>
+                    <CardTitle className="text-xl text-primary">
+                      {obj.object}
+                    </CardTitle>
                     <CardDescription>{obj.description}</CardDescription>
                   </CardHeader>
                   <CardContent>
                     <Tabs defaultValue="properties" className="w-full">
                       <TabsList className="grid w-full grid-cols-3">
-                        <TabsTrigger value="properties">Propiedades</TabsTrigger>
+                        <TabsTrigger value="properties">
+                          Propiedades
+                        </TabsTrigger>
                         <TabsTrigger value="methods">Métodos</TabsTrigger>
                         <TabsTrigger value="examples">Ejemplos</TabsTrigger>
                       </TabsList>
                       <TabsContent value="properties" className="mt-4">
                         <div className="space-y-3">
                           {obj.properties.map((prop, propIndex) => (
-                            <div key={propIndex} className="flex items-start justify-between p-3 bg-muted/50 rounded">
+                            <div
+                              key={propIndex}
+                              className="flex items-start justify-between p-3 bg-muted/50 rounded"
+                            >
                               <div className="flex-1">
-                                <code className="font-semibold">{prop.name || prop}</code>
-                                {prop.desc && <p className="text-sm text-muted-foreground mt-1">{prop.desc}</p>}
+                                <code className="font-semibold">
+                                  {prop.name || prop}
+                                </code>
+                                {prop.desc && (
+                                  <p className="text-sm text-muted-foreground mt-1">
+                                    {prop.desc}
+                                  </p>
+                                )}
                               </div>
                               {prop.example && (
-                                <code className="text-xs bg-background px-2 py-1 rounded ml-2">{prop.example}</code>
+                                <code className="text-xs bg-background px-2 py-1 rounded ml-2">
+                                  {prop.example}
+                                </code>
                               )}
                             </div>
                           ))}
@@ -1312,13 +1414,24 @@ End Sub`,
                       <TabsContent value="methods" className="mt-4">
                         <div className="space-y-3">
                           {obj.methods.map((method, methodIndex) => (
-                            <div key={methodIndex} className="flex items-start justify-between p-3 bg-muted/50 rounded">
+                            <div
+                              key={methodIndex}
+                              className="flex items-start justify-between p-3 bg-muted/50 rounded"
+                            >
                               <div className="flex-1">
-                                <code className="font-semibold">{method.name || method}</code>
-                                {method.desc && <p className="text-sm text-muted-foreground mt-1">{method.desc}</p>}
+                                <code className="font-semibold">
+                                  {method.name || method}
+                                </code>
+                                {method.desc && (
+                                  <p className="text-sm text-muted-foreground mt-1">
+                                    {method.desc}
+                                  </p>
+                                )}
                               </div>
                               {method.example && (
-                                <code className="text-xs bg-background px-2 py-1 rounded ml-2">{method.example}</code>
+                                <code className="text-xs bg-background px-2 py-1 rounded ml-2">
+                                  {method.example}
+                                </code>
                               )}
                             </div>
                           ))}
@@ -1326,7 +1439,11 @@ End Sub`,
                       </TabsContent>
                       <TabsContent value="examples" className="mt-4">
                         {obj.commonCode && (
-                          <CodeBlock code={obj.commonCode} title={`Ejemplo común con ${obj.object}`} language="vba" />
+                          <CodeBlock
+                            code={obj.commonCode}
+                            title={`Ejemplo común con ${obj.object}`}
+                            language="vba"
+                          />
                         )}
                       </TabsContent>
                     </Tabs>
@@ -1335,14 +1452,18 @@ End Sub`,
               ))}
             </div>
           </div>
-        )
+        );
 
       case "referencia":
         return (
           <div className="space-y-6">
             <div>
-              <h2 className="text-3xl font-bold text-primary mb-4">Referencia Completa</h2>
-              <p className="text-muted-foreground mb-6">Guía de referencia rápida para VBA en Excel</p>
+              <h2 className="text-3xl font-bold text-primary mb-4">
+                Referencia Completa
+              </h2>
+              <p className="text-muted-foreground mb-6">
+                Guía de referencia rápida para VBA en Excel
+              </p>
             </div>
 
             <div className="grid gap-6">
@@ -1353,44 +1474,68 @@ End Sub`,
                 <CardContent>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                      <h4 className="font-semibold mb-3">Manipulación de Celdas</h4>
+                      <h4 className="font-semibold mb-3">
+                        Manipulación de Celdas
+                      </h4>
                       <div className="space-y-2 text-sm">
                         <div className="p-2 bg-muted/50 rounded">
-                          <code className="font-mono">Range("A1").Value = "texto"</code>
-                          <p className="text-muted-foreground mt-1">Establecer valor en celda</p>
+                          <code className="font-mono">
+                            Range("A1").Value = "texto"
+                          </code>
+                          <p className="text-muted-foreground mt-1">
+                            Establecer valor en celda
+                          </p>
                         </div>
                         <div className="p-2 bg-muted/50 rounded">
                           <code className="font-mono">Cells(1,1).Value</code>
-                          <p className="text-muted-foreground mt-1">Acceso por índices (fila, columna)</p>
+                          <p className="text-muted-foreground mt-1">
+                            Acceso por índices (fila, columna)
+                          </p>
                         </div>
                         <div className="p-2 bg-muted/50 rounded">
                           <code className="font-mono">ActiveCell.Address</code>
-                          <p className="text-muted-foreground mt-1">Dirección de celda activa</p>
+                          <p className="text-muted-foreground mt-1">
+                            Dirección de celda activa
+                          </p>
                         </div>
                         <div className="p-2 bg-muted/50 rounded">
                           <code className="font-mono">Selection.Count</code>
-                          <p className="text-muted-foreground mt-1">Número de celdas seleccionadas</p>
+                          <p className="text-muted-foreground mt-1">
+                            Número de celdas seleccionadas
+                          </p>
                         </div>
                       </div>
                     </div>
                     <div>
-                      <h4 className="font-semibold mb-3">Navegación y Control</h4>
+                      <h4 className="font-semibold mb-3">
+                        Navegación y Control
+                      </h4>
                       <div className="space-y-2 text-sm">
                         <div className="p-2 bg-muted/50 rounded">
-                          <code className="font-mono">Worksheets("Hoja1").Activate</code>
-                          <p className="text-muted-foreground mt-1">Activar hoja específica</p>
+                          <code className="font-mono">
+                            Worksheets("Hoja1").Activate
+                          </code>
+                          <p className="text-muted-foreground mt-1">
+                            Activar hoja específica
+                          </p>
                         </div>
                         <div className="p-2 bg-muted/50 rounded">
                           <code className="font-mono">Range("A1").Select</code>
-                          <p className="text-muted-foreground mt-1">Seleccionar rango</p>
+                          <p className="text-muted-foreground mt-1">
+                            Seleccionar rango
+                          </p>
                         </div>
                         <div className="p-2 bg-muted/50 rounded">
                           <code className="font-mono">ActiveSheet.Name</code>
-                          <p className="text-muted-foreground mt-1">Nombre de hoja activa</p>
+                          <p className="text-muted-foreground mt-1">
+                            Nombre de hoja activa
+                          </p>
                         </div>
                         <div className="p-2 bg-muted/50 rounded">
                           <code className="font-mono">ThisWorkbook.Path</code>
-                          <p className="text-muted-foreground mt-1">Ruta del archivo actual</p>
+                          <p className="text-muted-foreground mt-1">
+                            Ruta del archivo actual
+                          </p>
                         </div>
                       </div>
                     </div>
@@ -1409,40 +1554,60 @@ End Sub`,
                       <div className="space-y-2 text-sm">
                         <div className="p-2 bg-muted/50 rounded">
                           <code className="font-mono">Len(texto)</code>
-                          <p className="text-muted-foreground mt-1">Longitud del texto</p>
+                          <p className="text-muted-foreground mt-1">
+                            Longitud del texto
+                          </p>
                         </div>
                         <div className="p-2 bg-muted/50 rounded">
                           <code className="font-mono">Left(texto, n)</code>
-                          <p className="text-muted-foreground mt-1">Primeros n caracteres</p>
+                          <p className="text-muted-foreground mt-1">
+                            Primeros n caracteres
+                          </p>
                         </div>
                         <div className="p-2 bg-muted/50 rounded">
                           <code className="font-mono">Right(texto, n)</code>
-                          <p className="text-muted-foreground mt-1">Últimos n caracteres</p>
+                          <p className="text-muted-foreground mt-1">
+                            Últimos n caracteres
+                          </p>
                         </div>
                         <div className="p-2 bg-muted/50 rounded">
                           <code className="font-mono">Trim(texto)</code>
-                          <p className="text-muted-foreground mt-1">Eliminar espacios extra</p>
+                          <p className="text-muted-foreground mt-1">
+                            Eliminar espacios extra
+                          </p>
                         </div>
                       </div>
                     </div>
                     <div>
-                      <h4 className="font-semibold mb-3">Funciones Matemáticas</h4>
+                      <h4 className="font-semibold mb-3">
+                        Funciones Matemáticas
+                      </h4>
                       <div className="space-y-2 text-sm">
                         <div className="p-2 bg-muted/50 rounded">
                           <code className="font-mono">Int(numero)</code>
-                          <p className="text-muted-foreground mt-1">Parte entera del número</p>
+                          <p className="text-muted-foreground mt-1">
+                            Parte entera del número
+                          </p>
                         </div>
                         <div className="p-2 bg-muted/50 rounded">
-                          <code className="font-mono">Round(numero, decimales)</code>
-                          <p className="text-muted-foreground mt-1">Redondear número</p>
+                          <code className="font-mono">
+                            Round(numero, decimales)
+                          </code>
+                          <p className="text-muted-foreground mt-1">
+                            Redondear número
+                          </p>
                         </div>
                         <div className="p-2 bg-muted/50 rounded">
                           <code className="font-mono">Abs(numero)</code>
-                          <p className="text-muted-foreground mt-1">Valor absoluto</p>
+                          <p className="text-muted-foreground mt-1">
+                            Valor absoluto
+                          </p>
                         </div>
                         <div className="p-2 bg-muted/50 rounded">
                           <code className="font-mono">Rnd()</code>
-                          <p className="text-muted-foreground mt-1">Número aleatorio 0-1</p>
+                          <p className="text-muted-foreground mt-1">
+                            Número aleatorio 0-1
+                          </p>
                         </div>
                       </div>
                     </div>
@@ -1488,16 +1653,20 @@ On Error GoTo 0       ' Desactivar manejo de errores`}
                       <h4 className="font-semibold mb-2">Navegación</h4>
                       <ul className="space-y-1 text-sm">
                         <li>
-                          <kbd className="bg-muted px-1 rounded">F5</kbd> - Ejecutar macro
+                          <kbd className="bg-muted px-1 rounded">F5</kbd> -
+                          Ejecutar macro
                         </li>
                         <li>
-                          <kbd className="bg-muted px-1 rounded">F8</kbd> - Ejecutar paso a paso
+                          <kbd className="bg-muted px-1 rounded">F8</kbd> -
+                          Ejecutar paso a paso
                         </li>
                         <li>
-                          <kbd className="bg-muted px-1 rounded">F9</kbd> - Punto de interrupción
+                          <kbd className="bg-muted px-1 rounded">F9</kbd> -
+                          Punto de interrupción
                         </li>
                         <li>
-                          <kbd className="bg-muted px-1 rounded">Ctrl+G</kbd> - Ventana inmediata
+                          <kbd className="bg-muted px-1 rounded">Ctrl+G</kbd> -
+                          Ventana inmediata
                         </li>
                       </ul>
                     </div>
@@ -1505,16 +1674,24 @@ On Error GoTo 0       ' Desactivar manejo de errores`}
                       <h4 className="font-semibold mb-2">Edición</h4>
                       <ul className="space-y-1 text-sm">
                         <li>
-                          <kbd className="bg-muted px-1 rounded">Ctrl+Space</kbd> - Autocompletar
+                          <kbd className="bg-muted px-1 rounded">
+                            Ctrl+Space
+                          </kbd>{" "}
+                          - Autocompletar
                         </li>
                         <li>
-                          <kbd className="bg-muted px-1 rounded">Ctrl+Shift+F9</kbd> - Limpiar puntos de interrupción
+                          <kbd className="bg-muted px-1 rounded">
+                            Ctrl+Shift+F9
+                          </kbd>{" "}
+                          - Limpiar puntos de interrupción
                         </li>
                         <li>
-                          <kbd className="bg-muted px-1 rounded">Ctrl+H</kbd> - Buscar y reemplazar
+                          <kbd className="bg-muted px-1 rounded">Ctrl+H</kbd> -
+                          Buscar y reemplazar
                         </li>
                         <li>
-                          <kbd className="bg-muted px-1 rounded">Ctrl+Z</kbd> - Deshacer
+                          <kbd className="bg-muted px-1 rounded">Ctrl+Z</kbd> -
+                          Deshacer
                         </li>
                       </ul>
                     </div>
@@ -1523,14 +1700,14 @@ On Error GoTo 0       ' Desactivar manejo de errores`}
               </Card>
             </div>
           </div>
-        )
+        );
 
       default:
-        return <div>Sección en desarrollo...</div>
+        return <div>Sección en desarrollo...</div>;
     }
-  }
+  };
 
- const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-background">
@@ -1543,15 +1720,24 @@ On Error GoTo 0       ' Desactivar manejo de errores`}
               className="lg:hidden p-2 rounded-md hover:bg-accent"
               onClick={() => setIsSidebarOpen(!isSidebarOpen)}
             >
-              {isSidebarOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              {isSidebarOpen ? (
+                <X className="h-6 w-6" />
+              ) : (
+                <Menu className="h-6 w-6" />
+              )}
             </button>
-            <h1 className="text-xl font-bold hidden lg:block">VBA Excel Docs</h1>
+            <h1 className="text-xl font-bold hidden lg:block">
+              VBA Excel Docs
+            </h1>
           </div>
-          <SearchBar onResultClick={handleSearchResult} searchData={searchData} />
+          <SearchBar
+            onResultClick={handleSearchResult}
+            searchData={searchData}
+          />
         </div>
       </header>
 
-      <div className="flex">
+      <div className="flex sticky">
         {/* Sidebar */}
         <aside
           className={`
@@ -1560,15 +1746,15 @@ On Error GoTo 0       ' Desactivar manejo de errores`}
             ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"}
           `}
         >
-          <nav className="p-4 space-y-2">
+          <nav className="p-4 space-y-2 sm:mt-0 mt-14">
             {sidebarSections.map((section) => {
-              const Icon = section.icon
+              const Icon = section.icon;
               return (
                 <button
                   key={section.id}
                   onClick={() => {
-                    setActiveSection(section.id)
-                    setIsSidebarOpen(false) // cerrar al seleccionar en móvil
+                    setActiveSection(section.id);
+                    setIsSidebarOpen(false); // cerrar al seleccionar en móvil
                   }}
                   className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-colors ${
                     activeSection === section.id
@@ -1579,7 +1765,7 @@ On Error GoTo 0       ' Desactivar manejo de errores`}
                   <Icon className="h-4 w-4" />
                   {section.title}
                 </button>
-              )
+              );
             })}
           </nav>
         </aside>
@@ -1598,5 +1784,5 @@ On Error GoTo 0       ' Desactivar manejo de errores`}
         </main>
       </div>
     </div>
-  )
+  );
 }
