@@ -1710,79 +1710,86 @@ On Error GoTo 0       ' Desactivar manejo de errores`}
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header con buscador */}
-      <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container flex h-16 items-center justify-between px-4">
-          <div className="flex items-center gap-4">
-            {/* Botón hamburguesa visible solo en móviles */}
-            <button
-              className="lg:hidden p-2 rounded-md hover:bg-accent"
-              onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-            >
-              {isSidebarOpen ? (
-                <X className="h-6 w-6" />
-              ) : (
-                <Menu className="h-6 w-6" />
-              )}
-            </button>
-            <h1 className="text-xl font-bold hidden lg:block">
-              VBA Excel Docs
-            </h1>
-          </div>
-          <SearchBar
-            onResultClick={handleSearchResult}
-            searchData={searchData}
-          />
-        </div>
-      </header>
-
-      <div className="flex sticky">
-        {/* Sidebar */}
-        <aside
-          className={`
-            fixed inset-y-0 left-0 z-50 w-64 border-r bg-sidebar overflow-y-auto transform transition-transform duration-300
-            lg:sticky lg:top-16 lg:h-[calc(100vh-4rem)] lg:translate-x-0
-            ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"}
-          `}
+<div className="min-h-screen bg-background">
+  {/* Header con buscador - FIJO en la parte superior */}
+  <header className={`fixed top-0 left-0 right-0 z-50 w-full border-b transition-all duration-300 ${
+    isSidebarOpen 
+      ? 'bg-background border-b-border/50' 
+      : 'bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60'
+  }`}>
+    <div className="container flex h-16 items-center justify-between px-4">
+      <div className="flex items-center gap-4">
+        {/* Botón hamburguesa visible solo en móviles */}
+        <button
+          className="lg:hidden p-2 rounded-md hover:bg-accent"
+          onClick={() => setIsSidebarOpen(!isSidebarOpen)}
         >
-          <nav className="p-4 space-y-2 sm:mt-0 mt-14">
-            {sidebarSections.map((section) => {
-              const Icon = section.icon;
-              return (
-                <button
-                  key={section.id}
-                  onClick={() => {
-                    setActiveSection(section.id);
-                    setIsSidebarOpen(false); // cerrar al seleccionar en móvil
-                  }}
-                  className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-colors ${
-                    activeSection === section.id
-                      ? "bg-sidebar-accent text-sidebar-accent-foreground"
-                      : "text-sidebar-foreground hover:bg-sidebar-accent/50"
-                  }`}
-                >
-                  <Icon className="h-4 w-4" />
-                  {section.title}
-                </button>
-              );
-            })}
-          </nav>
-        </aside>
-
-        {/* Overlay en móviles */}
-        {isSidebarOpen && (
-          <div
-            className="fixed inset-0 bg-black/50 z-40 lg:hidden"
-            onClick={() => setIsSidebarOpen(false)}
-          />
-        )}
-
-        {/* Main content */}
-        <main className="flex-1 p-6">
-          <div className="max-w-3xl mx-auto ">{renderContent()}</div>
-        </main>
+          {isSidebarOpen ? (
+            <X className="h-6 w-6" />
+          ) : (
+            <Menu className="h-6 w-6" />
+          )}
+        </button>
+        <h1 className="text-xl font-bold hidden lg:block">
+          VBA Excel Docs
+        </h1>
       </div>
+      <SearchBar
+        onResultClick={handleSearchResult}
+        searchData={searchData}
+      />
     </div>
+  </header>
+
+  {/* Container principal con padding-top para compensar el header fijo */}
+  <div className="flex relative pt-16">
+    {/* Sidebar */}
+    <aside
+      className={`
+        fixed top-16 left-0 bottom-0 z-40 w-64 border-r bg-sidebar/95 backdrop-blur-sm overflow-y-auto transform transition-transform duration-300
+        lg:bg-sidebar lg:backdrop-blur-none lg:z-30
+        ${isSidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
+      `}
+    >
+      <nav className="p-4 space-y-2">
+        {sidebarSections.map((section) => {
+          const Icon = section.icon;
+          return (
+            <button
+              key={section.id}
+              onClick={() => {
+                setActiveSection(section.id);
+                setIsSidebarOpen(false); // cerrar al seleccionar en móvil
+              }}
+              className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-colors ${
+                activeSection === section.id
+                  ? "bg-sidebar-accent text-sidebar-accent-foreground"
+                  : "text-sidebar-foreground hover:bg-sidebar-accent/50"
+              }`}
+            >
+              <Icon className="h-4 w-4" />
+              {section.title}
+            </button>
+          );
+        })}
+      </nav>
+    </aside>
+
+    {/* Overlay en móviles */}
+    {isSidebarOpen && (
+      <div
+        className="fixed inset-0 bg-black/60 z-30 lg:hidden backdrop-blur-sm"
+        onClick={() => setIsSidebarOpen(false)}
+      />
+    )}
+
+    {/* Main content */}
+    <main className="flex-1 p-6 lg:ml-64 min-h-[calc(100vh-4rem)]">
+      <div className="max-w-3xl mx-auto">
+        {renderContent()}
+      </div>
+    </main>
+  </div>
+</div>
   );
 }
